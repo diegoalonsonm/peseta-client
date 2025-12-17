@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     const email = localStorage.getItem('email')
 
-    axios.get('https://cash-controller-server.onrender.com/').then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/`).then((res) => {
       if (res.status === 401) {
         setIsAuthenticated(false)
         router.push('/login')
@@ -31,19 +31,19 @@ export default function Home() {
       router.push('/login')
     })
 
-    axios.get(`https://cash-controller-server.onrender.com/users/balance/${email}`).then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/balance/${email}`).then((res) => {
       setBalance(res.data)
     }).catch((err) => {
       console.log(err)
     })
 
-    axios.get(`https://cash-controller-server.onrender.com/expenses/lastFive/${email}`).then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/lastFive/${email}`).then((res) => {
       setExpenses(res.data)
     }).catch((err) => {
       console.log(err)
     })
 
-    axios.get(`https://cash-controller-server.onrender.com/incomes/lastFive/${email}`).then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/incomes/lastFive/${email}`).then((res) => {
       setIncomes(res.data)
     }).catch((err) => {
       console.log(err)
@@ -55,12 +55,12 @@ export default function Home() {
       {
         isAuthenticated ? (
           <div className="mx-auto text-center my-5">
-            <h1>Your balance</h1>
-            <p className={`${balance >= 0 ? 'text-success' : 'text-danger'} mt-4 h2`}>$ {balance.toFixed(2)}</p>
+            <h1>Tu balance</h1>
+            <p className={`${balance >= 0 ? 'text-success' : 'text-danger'} mt-4 h2`}>₡ {balance.toFixed(2)}</p>
               <div className="row">
                 <div className="col-12 col-md-6">
                   <h4 className="mt-5 mb-3">
-                    Your last 5 expenses
+                    Tus últimos 5 gastos
                   </h4>
                   <div>
                     {expenses.map((expense: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
@@ -74,15 +74,15 @@ export default function Home() {
                     ))}
                   </div>
                   <Link className="btn btn-info text-white" href="/expense">
-                    Add new expense
+                    Agregar nuevo gasto
                   </Link>
                   <Link className="btn btn-secondary ms-2" href="/expense/all">
-                    View all expenses
+                    Ver todos los gastos
                   </Link>
                 </div>
                 <div className="col-12 col-md-6">
                   <h4 className="mt-5 mb-3">
-                    Your last 5 incomes
+                    Tus últimos 5 ingresos
                   </h4>
                   <div>
                     {incomes.map((income: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
@@ -96,17 +96,17 @@ export default function Home() {
                     ))}
                   </div>
                   <Link className="btn btn-info text-white" href="/income">
-                    Add new income
+                    Agregar nuevo ingreso
                   </Link>
                   <Link className="btn btn-secondary ms-2" href="/income/all">
-                    View all incomes
+                    Ver todos los ingresos
                   </Link>
                 </div>
               </div>
             </div>                    
         ) : (
           <div className="d-flex justify-content-center align-items-center vh-100">
-            <p className="h2">Loading...</p>
+            <p className="h2">Cargando...</p>
           </div>
         )
       }

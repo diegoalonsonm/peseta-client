@@ -13,13 +13,13 @@ const AllExpenses = () => {
     useEffect(() => {
         const email = localStorage.getItem('email')
 
-        axios.get(`https://cash-controller-server.onrender.com/expenses/${email}`).then((res) => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${email}`).then((res) => {
             setExpenses(res.data)
         }).catch((err) => {
             console.log(err)
         })
 
-        axios.get(`https://cash-controller-server.onrender.com/expenses/totalAmount/${email}`).then((res) => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/totalAmount/${email}`).then((res) => {
             setAmount(res.data[0].totalAmount)
         }).catch((err) => {
             console.log(err)
@@ -32,12 +32,12 @@ const AllExpenses = () => {
         <div className="row mt-2 text-center">
             <div className="col">
                 <h2>
-                    All Expenses
+                    Todos los Gastos
                 </h2>
             </div>
         </div>
         <div className="row mt-2 text-center">
-            <p className='h4 fw-normal'>Total spent: <span className='text-info-emphasis'>{amount}</span></p> 
+            <p className='h4 fw-normal'>Total gastado: <span className='text-info-emphasis'>{amount}</span></p> 
         </div>
         <div className="row width-50 mt-3 mx-auto">
             <div className="col">

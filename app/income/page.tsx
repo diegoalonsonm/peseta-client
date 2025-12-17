@@ -29,27 +29,27 @@ const Income = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
-    axios.post('https://cash-controller-server.onrender.com/incomes', data).then((res) => {
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/incomes`, data).then((res) => {
       if (res.data) {
         cleanInputs()
         Swal.fire({
           icon: 'success',
-          title: 'Income added',
-          text: 'Your income has been added successfully'
+          title: 'Ingreso agregado',
+          text: 'Tu ingreso ha sido agregado exitosamente'
         })
         router.push('/')
       } else {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'There was an error adding the income'
+          text: 'Hubo un error agregando el ingreso'
         })
       }
     }).catch((err) => {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'There was an error adding the income'
+        text: 'Hubo un error agregando el ingreso'
       })
       console.log(err)
     })
@@ -59,36 +59,36 @@ const Income = () => {
     <div className="container">
       <div className="row text-center mt-5">
         <div className="col">
-          <h2>New Income</h2>
+          <h2>Nuevo Ingreso</h2>
         </div>
       </div>
       <div className="row mt-3 mx-auto width-50">
         <div className="col">
           <form onSubmit={handleSubmit}>
             <div className="form-group mb-3">
-              <label htmlFor="description">Description</label>
+              <label htmlFor="description">Descripción</label>
               <input type="text" className="form-control" id="description" aria-describedby="description"
-                placeholder="Enter description" onChange={(e) => setDescription(e.target.value)} />
+                placeholder="Ingresa la descripción" onChange={(e) => setDescription(e.target.value)} />
             </div>
             <div className="form-group mb-3">
-              <label htmlFor="amount">Amount</label>
-              <input type="number" step="0.01" className="form-control" id="amount" placeholder="Enter amount"
+              <label htmlFor="amount">Cantidad</label>
+              <input type="number" step="0.01" className="form-control" id="amount" placeholder="Ingresa la cantidad"
                 onChange={(e) => setAmount(Number(e.target.value))} />
             </div>
             <div className="form-group mb-3">
-              <label htmlFor="category">Category</label>
+              <label htmlFor="category">Categoría</label>
               <select className="form-control" id="category" onChange={(e) => setCategory(Number(e.target.value))}>
-                <option>Select the according cateogry</option>
-                <option value="9">Salary</option>
-                <option value="10">Investment</option>
-                <option value="11">Gift</option>
-                <option value="12">Savings</option>
-                <option value="13">Loans</option>
-                <option value="14">Insurance</option>
-                <option value="15">Other</option>
+                <option>Selecciona la categoría correspondiente</option>
+                <option value="9">Salario</option>
+                <option value="10">Inversión</option>
+                <option value="11">Regalo</option>
+                <option value="12">Ahorros</option>
+                <option value="13">Préstamos</option>
+                <option value="14">Seguro</option>
+                <option value="15">Otro</option>
               </select>
             </div>
-            <Button type="submit" className='btn-info text-white' text='Add income' />
+            <Button type="submit" className='btn-info text-white' text='Agregar ingreso' />
           </form>
         </div>
       </div>

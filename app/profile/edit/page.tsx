@@ -23,7 +23,7 @@ const EditPage = () => {
     const data = {nameData, lastNameData, passwordData, email}
     
     useEffect(() => {
-        axios.get(`https://cash-controller-server.onrender.com/users/${email}`).then(res => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${email}`).then(res => {
             setNameInput(res.data[0].name)
             setLastNameInput(res.data[0].lastName)
             setPasswordInput(res.data[0].password)
@@ -38,8 +38,8 @@ const EditPage = () => {
         if (passwordData !== confirmPasswordInput) {
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
-                text: 'Passwords do not match'
+                title: 'Ups...',
+                text: 'Las contraseñas no coinciden'
             })
             return
         }
@@ -56,11 +56,11 @@ const EditPage = () => {
             setLastNameData(lastNameInput)
         }
 
-        axios.put(`https://cash-controller-server.onrender.com/users/${email}`, data).then(res => {
+        axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/${email}`, data).then(res => {
             Swal.fire({
                 icon: 'success',
-                title: 'Success',
-                text: 'Your info has been updated'
+                title: 'Éxito',
+                text: 'Tu información ha sido actualizada'
             })
         }).catch(err => {
             console.log(err)
@@ -73,7 +73,7 @@ const EditPage = () => {
             <div className="row text-center mt-3">
                 <div className="col">
                     <h2>
-                        Edit your info
+                        Edita tu información
                     </h2>
                 </div>
             </div>
@@ -81,26 +81,26 @@ const EditPage = () => {
                 <div className="col">
                     <form onSubmit={handleSubmit}>
                         <div className="form-group mb-3">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">Nombre</label>
                             <input type="text" className="form-control" id="name" placeholder={nameInput} 
                                 onChange={e => setNameData(e.target.value)} />
                         </div>
                         <div className="form-group mb-3">
-                            <label htmlFor="lastName">Last Name</label>
+                            <label htmlFor="lastName">Apellido</label>
                             <input type="text" className="form-control" id="lastName" placeholder={lastNameInput}
                                 onChange={e => setLastNameData(e.target.value)} />
                         </div>
                         <div className="form-group mb-3">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control" id="password" placeholder="Password" 
+                            <label htmlFor="password">Contraseña</label>
+                            <input type="password" className="form-control" id="password" placeholder="Contraseña" 
                                 onChange={e => setPasswordData(e.target.value)} />
                         </div>
                         <div className="form-group mb-3">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                            <input type="password" className="form-control" id="confirmPassword" placeholder="Confirm Password"
+                            <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+                            <input type="password" className="form-control" id="confirmPassword" placeholder="Confirmar Contraseña"
                                 onChange={e => setConfirmPasswordInput(e.target.value)} />
                         </div>
-                        <button type="submit" className="btn btn-info text-white">Submit changes</button>
+                        <button type="submit" className="btn btn-info text-white">Enviar cambios</button>
                     </form>
                 </div>
             </div>

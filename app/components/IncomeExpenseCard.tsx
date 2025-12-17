@@ -40,7 +40,7 @@ export default function IncomeExpenseCard({ description, amount, date, category 
         </div>
         <div className="col text-end">
           <p className='fs-5'>
-            ${amount}
+            ₡{amount}
           </p>
         </div>
       </div>

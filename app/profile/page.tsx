@@ -18,7 +18,7 @@ const Profile = () => {
     email = localStorage.getItem('email') ?? ''
   }
 
-  axios.get(`https://cash-controller-server.onrender.com/users/${email}`).then((res) => {
+  axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${email}`).then((res) => {
     setName(res.data[0].name)
     setLastName(res.data[0].lastName)
   }).catch((err) => {
@@ -35,36 +35,36 @@ const Profile = () => {
       <div className="row">
         <div className="col d-flex justify-content-center align-items-center mt-3"> 
           <h1>
-            Your Info
+            Tu Información
           </h1>
         </div>
       </div>
       <div className="row mt-2">
         <div className="col-12 col-md-6">
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Nombre</label>
             <input type="text" className="form-control" id="name" placeholder={name} readOnly />
           </div>
           <div className="form-group mt-3">
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Apellido</label>
             <input type="text" className="form-control" id="lastName" placeholder={lastName} readOnly />
           </div>          
         </div>
         <div className="col-12 col-md-6">
         <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Correo Electrónico</label>
             <input type="email" className="form-control" id="email" placeholder={email} readOnly />
           </div>
           <div className="form-group mt-3">
-            <label htmlFor="password">Password</label>
-            <input type="password" className="form-control" id="password" placeholder="Password" readOnly />
+            <label htmlFor="password">Contraseña</label>
+            <input type="password" className="form-control" id="password" placeholder="Contraseña" readOnly />
           </div>
         </div>
       </div>
       <div className="row mt-4">
         <div className="col d-flex justify-content-center align-items-center">
           <Link className="btn btn-info text-white w-50" href="/profile/edit">
-            Edit info
+            Editar información
           </Link>
         </div>
       </div>

@@ -8,19 +8,19 @@ import { IconLogout, IconUserCircle, IconChartBar, IconHome } from '@tabler/icon
 export const Navbar = () => {
   const handleDelete = () => {
     Swal.fire({
-      title: "Are you sure you want to log out?",
-      text: "Your session will expire after this",
+      title: "¿Estás seguro de que quieres cerrar sesión?",
+      text: "Tu sesión expirará después de esto",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, I want to log out"
+      confirmButtonText: "Sí, quiero cerrar sesión"
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
           icon: 'success',
-          title: 'Logged out successfully',
-          text: 'Thanks for using Cash Controller!'
+          title: 'Sesión cerrada exitosamente',
+          text: '¡Gracias por usar Cash Controller!'
         })
         localStorage.removeItem('email')
         setTimeout(() => {        
@@ -53,17 +53,17 @@ export const Navbar = () => {
         <div className="offcanvas-body">
           <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
             <Link href="/" className='nav-item text-secondary text-decoration-none'>
-              <p>Home <IconHome size={20} className='mb-1' /> </p>
+              <p>Inicio <IconHome size={20} className='mb-1' /> </p>
             </Link>
             <Link href="/stats" className='nav-item text-secondary text-decoration-none'>
-              <p>Stats <IconChartBar size={20} className='mb-1' /> </p>
+              <p>Estadísticas <IconChartBar size={20} className='mb-1' /> </p>
             </Link>
             <Link href="/profile" className='nav-item text-secondary text-decoration-none'>
-              <p>My Profile <IconUserCircle size={20} className='mb-1' /> </p>
+              <p>Mi Perfil <IconUserCircle size={20} className='mb-1' /> </p>
             </Link>
           </ul>
           <div>
-            <Button text="Logout" className="btn-danger" type="button" onClick={handleDelete} icon={<IconLogout size={20} className='mb-1'/>} />
+            <Button text="Cerrar Sesión" className="btn-danger" type="button" onClick={handleDelete} icon={<IconLogout size={20} className='mb-1'/>} />
           </div>
         </div>
       </div>
