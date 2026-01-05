@@ -16,7 +16,7 @@ const EmptyState = ({ icon, title, message, actionText, actionLink }: EmptyState
         {icon}
       </div>
       <h4 className="empty-state-title mb-2">{title}</h4>
-      <p className="text-secondary mb-4">{message}</p>
+      <p className="mb-4">{message}</p>
       <Link href={actionLink} className="btn btn-info text-white">
         {actionText}
       </Link>

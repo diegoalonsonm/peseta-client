@@ -1,6 +1,4 @@
-body {
-    background-color: #f8f8f8 !important;
-}
+/* Colors are defined in custom-bootstrap.scss */
 
 .width-50 {
     width: 50%;
@@ -24,13 +22,14 @@ body {
 /* Empty State Styles */
 .empty-state {
     padding: 3rem 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
     background-color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #E2E8F0;
 }
 
 .empty-state-icon {
-    color: #6c757d;
+    color: #64748B;
     opacity: 0.5;
 }
 
@@ -40,8 +39,12 @@ body {
 }
 
 .empty-state-title {
-    color: #495057;
+    color: #1E293B;
     font-weight: 600;
+}
+
+.empty-state p {
+    color: #64748B;
 }
 
 @media screen and (max-width: 500px) {

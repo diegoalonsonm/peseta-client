@@ -1,0 +1,30 @@
+$primary: #064E3B;        
+$secondary: #64748B;      
+$success: #10B981;        
+$danger: #BE123C;         
+$info: #064E3B;           
+$warning: #F59E0B;        
+
+// Body Styling
+$body-bg: #F8FAFC;        
+$body-color: #1E293B;     
+
+// Text Colors
+$text-muted: #64748B;
+$secondary-color: rgba(100, 116, 139, 0.75);
+$tertiary-color: rgba(148, 163, 184, 0.5);
+
+// Border & Dividers
+$border-color: #E2E8F0;
+$border-color-translucent: rgba(226, 232, 240, 0.5);
+
+// Card Styling
+$card-border-color: $border-color;
+$card-cap-bg: #ffffff;
+
+// Link Colors
+$link-color: $primary;
+$link-hover-color: darken($primary, 10%);
+
+// Import Bootstrap
+@import 'bootstrap/scss/bootstrap';
