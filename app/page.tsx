@@ -6,6 +6,7 @@ import axios from "axios";
 import IncomeExpenseCard from "./components/IncomeExpenseCard";
 import EmptyState from "./components/EmptyState";
 import Spinner from "./components/Spinner";
+import BalanceCard from "./components/BalanceCard";
 import Link from "next/link";
 import { IconReceipt, IconCoin } from "@tabler/icons-react";
 
@@ -61,9 +62,8 @@ export default function Home() {
 
   return (
     <main className="container">
-      <div className="mx-auto text-center my-5">
-        <h1>Tu balance</h1>
-        <p className={`${balance >= 0 ? 'text-success' : 'text-danger'} mt-4 h2`}>₡ {balance.toFixed(2)}</p>
+      <div className="mx-auto my-5">
+        <BalanceCard balance={balance} />
         <div className="row">
           <div className="col-12 col-md-6">
             <h4 className="mt-5 mb-3">

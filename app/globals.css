@@ -198,3 +198,201 @@
     font-size: 0.75rem;
     color: #64748B;
 }
+
+/* Balance Card Styles */
+.balance-card {
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.06);
+    margin: 2rem auto;
+    max-width: 600px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.balance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Gradient backgrounds based on balance state */
+.balance-card.balance-positive {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 2px solid #10B981;
+}
+
+.balance-card.balance-negative {
+    background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
+    border: 2px solid #BE123C;
+}
+
+.balance-card.balance-neutral {
+    background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+    border: 2px solid #64748B;
+}
+
+/* Header section with title and trend icon */
+.balance-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.balance-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0;
+}
+
+.balance-trend-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.balance-positive .balance-trend-icon {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #059669;
+}
+
+.balance-negative .balance-trend-icon {
+    background-color: rgba(190, 18, 60, 0.15);
+    color: #BE123C;
+}
+
+.balance-neutral .balance-trend-icon {
+    background-color: rgba(100, 116, 139, 0.15);
+    color: #64748B;
+}
+
+.balance-card:hover .balance-trend-icon {
+    transform: scale(1.1);
+}
+
+/* Balance amount display */
+.balance-amount-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin: 1.5rem 0;
+    animation: balance-fade-in 0.5s ease-out;
+}
+
+@keyframes balance-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.balance-currency {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.balance-positive .balance-currency,
+.balance-positive .balance-amount {
+    color: #059669;
+}
+
+.balance-negative .balance-currency,
+.balance-negative .balance-amount {
+    color: #BE123C;
+}
+
+.balance-neutral .balance-currency,
+.balance-neutral .balance-amount {
+    color: #64748B;
+}
+
+.balance-amount {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+/* Status message */
+.balance-status {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.balance-status-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.balance-positive .balance-status-text {
+    color: #059669;
+}
+
+.balance-negative .balance-status-text {
+    color: #BE123C;
+}
+
+.balance-neutral .balance-status-text {
+    color: #64748B;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .balance-card {
+        padding: 2rem 1.5rem;
+        margin: 1.5rem auto;
+    }
+
+    .balance-title {
+        font-size: 1.25rem;
+    }
+
+    .balance-amount {
+        font-size: 2.5rem;
+    }
+
+    .balance-currency {
+        font-size: 1.5rem;
+    }
+
+    .balance-trend-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .balance-trend-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .balance-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .balance-amount {
+        font-size: 2rem;
+    }
+
+    .balance-currency {
+        font-size: 1.25rem;
+    }
+
+    .balance-status-text {
+        font-size: 0.875rem;
+    }
+}
