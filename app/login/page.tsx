@@ -11,13 +11,62 @@ import { Input } from '../components/Input'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const router = useRouter()
 
   axios.defaults.withCredentials = true
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email) {
+      setEmailError('El correo electrónico es requerido')
+      return false
+    }
+    if (!emailRegex.test(email)) {
+      setEmailError('Por favor ingresa un correo electrónico válido')
+      return false
+    }
+    setEmailError('')
+    return true
+  }
+
+  const validatePassword = (password: string) => {
+    if (!password) {
+      setPasswordError('La contraseña es requerida')
+      return false
+    }
+    if (password.length < 6) {
+      setPasswordError('La contraseña debe tener al menos 6 caracteres')
+      return false
+    }
+    setPasswordError('')
+    return true
+  }
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setEmail(value)
+    if (value) validateEmail(value)
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setPassword(value)
+    if (value) validatePassword(value)
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const isEmailValid = validateEmail(email)
+    const isPasswordValid = validatePassword(password)
+
+    if (!isEmailValid || !isPasswordValid) return
+
+    setIsSubmitting(true)
 
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, { email, password }).then((res) => {
       if (res.data) {
@@ -34,18 +83,18 @@ const Login = () => {
           title: 'Credenciales inválidas',
           text: 'Por favor verifica tu correo electrónico y contraseña e inténtalo de nuevo.'
         })
-      } 
-    }) 
+      }
+    })
     .catch((err) => {
       Swal.fire({
         icon: 'error',
         title: 'Credenciales inválidas',
         text: 'Por favor verifica tu correo electrónico y contraseña e inténtalo de nuevo.'
       })
-    })  
+    }).finally(() => {
+      setIsSubmitting(false)
+    })
   }
-
-  const handlePasswordChange = () => {}
 
   return (
     <>
@@ -56,17 +105,47 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="loginEmail" className="form-label">Dirección de correo electrónico</label>
-                <Input type="email" className='form-control' id='loginEmail' ariaDescribedby='loginEmail'
-                  onChange={(e) => setEmail(e.target.value)} />
+                <Input
+                  type="email"
+                  id='loginEmail'
+                  value={email}
+                  onChange={handleEmailChange}
+                  error={emailError}
+                  isValid={!emailError && email.length > 0}
+                  placeholder="tu@email.com"
+                  disabled={isSubmitting}
+                />
               </div>
               <div className="mb-3">
                 <label htmlFor="loginPass" className="form-label">Contraseña</label>
-                <Input type="password" id="loginPass" className="form-control" onChange={(e) => setPassword(e.target.value)} />
+                <Input
+                  type="password"
+                  id="loginPass"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  error={passwordError}
+                  isValid={!passwordError && password.length > 0}
+                  placeholder="Ingresa tu contraseña"
+                  disabled={isSubmitting}
+                />
               </div>
               <div className="mb-3 d-flex align-items-center">
-                <Button text='Iniciar Sesión' type='submit' className='btn-primary'/>
+                <button
+                  type="submit"
+                  className='btn btn-primary'
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      Iniciando sesión...
+                    </>
+                  ) : (
+                    'Iniciar Sesión'
+                  )}
+                </button>
                 <Link href="/resetPassword" className='ms-3 mt-2'>
-                  <p>¿Olvidaste tu contraseña? Haz clic aquí</p>            
+                  <p>¿Olvidaste tu contraseña? Haz clic aquí</p>
                 </Link>
               </div>
             </form>

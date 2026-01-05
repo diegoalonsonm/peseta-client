@@ -1,16 +1,21 @@
 'use client'
 
 import { useState } from "react"
-import { Button } from '../components/Button'
+import { Input } from '../components/Input'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from "next/navigation"
 
 const Income = () => {
   const [description, setDescription] = useState('')
-  const [amount, setAmount] = useState(0.0)
+  const [amount, setAmount] = useState('')
   const [category, setCategory] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [descriptionError, setDescriptionError] = useState('')
+  const [amountError, setAmountError] = useState('')
+  const [categoryError, setCategoryError] = useState('')
+
   var email = ''
 
   if (typeof window !== 'undefined') {
@@ -19,21 +24,75 @@ const Income = () => {
 
   const router = useRouter()
 
-  const data = {description, amount, category, email}
+  const validateDescription = (desc: string) => {
+    if (!desc.trim()) {
+      setDescriptionError('La descripción es requerida')
+      return false
+    }
+    if (desc.trim().length < 3) {
+      setDescriptionError('La descripción debe tener al menos 3 caracteres')
+      return false
+    }
+    setDescriptionError('')
+    return true
+  }
 
-  const cleanInputs = () => {
-    setDescription('')
-    setAmount(0.0)
-    setCategory(0)
+  const validateAmount = (amt: string) => {
+    const numAmount = parseFloat(amt)
+    if (!amt || isNaN(numAmount)) {
+      setAmountError('La cantidad es requerida')
+      return false
+    }
+    if (numAmount < 1) {
+      setAmountError('La cantidad debe ser al menos 1')
+      return false
+    }
+    setAmountError('')
+    return true
+  }
+
+  const validateCategory = (cat: number) => {
+    if (cat === 0) {
+      setCategoryError('Por favor selecciona una categoría')
+      return false
+    }
+    setCategoryError('')
+    return true
+  }
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setDescription(value)
+    if (value) validateDescription(value)
+  }
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setAmount(value)
+    if (value) validateAmount(value)
+  }
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = Number(e.target.value)
+    setCategory(value)
+    if (value) validateCategory(value)
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const isDescValid = validateDescription(description)
+    const isAmountValid = validateAmount(amount)
+    const isCatValid = validateCategory(category)
+
+    if (!isDescValid || !isAmountValid || !isCatValid) return
+
     setIsSubmitting(true)
+
+    const data = {description, amount: parseFloat(amount), category, email}
 
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/incomes`, data).then((res) => {
       if (res.data) {
-        cleanInputs()
         Swal.fire({
           icon: 'success',
           title: 'Ingreso agregado',
@@ -71,18 +130,42 @@ const Income = () => {
           <form onSubmit={handleSubmit}>
             <div className="form-group mb-3">
               <label htmlFor="description">Descripción</label>
-              <input type="text" className="form-control" id="description" aria-describedby="description"
-                placeholder="Ingresa la descripción" onChange={(e) => setDescription(e.target.value)} />
+              <Input
+                type="text"
+                id="description"
+                value={description}
+                onChange={handleDescriptionChange}
+                error={descriptionError}
+                isValid={!descriptionError && description.length > 0}
+                placeholder="Ej: Salario, inversión, etc."
+                disabled={isSubmitting}
+              />
             </div>
             <div className="form-group mb-3">
               <label htmlFor="amount">Cantidad</label>
-              <input type="number" step="0.01" className="form-control" id="amount" placeholder="Ingresa la cantidad"
-                onChange={(e) => setAmount(Number(e.target.value))} />
+              <Input
+                type="number"
+                id="amount"
+                value={amount}
+                onChange={handleAmountChange}
+                error={amountError}
+                isValid={!amountError && amount.length > 0}
+                placeholder="1.00"
+                disabled={isSubmitting}
+                min="1"
+                step="1"
+              />
             </div>
             <div className="form-group mb-3">
               <label htmlFor="category">Categoría</label>
-              <select className="form-control" id="category" onChange={(e) => setCategory(Number(e.target.value))}>
-                <option>Selecciona la categoría correspondiente</option>
+              <select
+                className={`form-control ${categoryError ? 'is-invalid' : category > 0 ? 'is-valid' : ''}`}
+                id="category"
+                value={category}
+                onChange={handleCategoryChange}
+                disabled={isSubmitting}
+              >
+                <option value="0">Selecciona la categoría correspondiente</option>
                 <option value="9">Salario</option>
                 <option value="10">Inversión</option>
                 <option value="11">Regalo</option>
@@ -91,6 +174,7 @@ const Income = () => {
                 <option value="14">Seguro</option>
                 <option value="15">Otro</option>
               </select>
+              {categoryError && <div className="invalid-feedback d-block">{categoryError}</div>}
             </div>
             <button
               type="submit"

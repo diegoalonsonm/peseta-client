@@ -112,3 +112,89 @@
     color: #64748B;
     font-size: 1rem;
 }
+
+/* Form Validation Styles */
+.valid-feedback-icon,
+.invalid-feedback-icon {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+.valid-feedback-icon {
+    color: #10B981;
+}
+
+.invalid-feedback-icon {
+    color: #BE123C;
+}
+
+.form-control.is-valid {
+    border-color: #10B981;
+    padding-right: 2.5rem;
+    background-image: none !important; /* Disable Bootstrap's default icon */
+}
+
+.form-control.is-valid:focus {
+    border-color: #10B981;
+    box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
+}
+
+.form-control.is-invalid {
+    border-color: #BE123C;
+    padding-right: 2.5rem;
+    background-image: none !important; /* Disable Bootstrap's default icon */
+}
+
+.form-control.is-invalid:focus {
+    border-color: #BE123C;
+    box-shadow: 0 0 0 0.25rem rgba(190, 18, 60, 0.25);
+}
+
+.invalid-feedback {
+    color: #BE123C;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: 0.5rem;
+}
+
+.password-strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: #E2E8F0;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+}
+
+.password-strength-fill {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.password-strength-fill.weak {
+    width: 33%;
+    background-color: #BE123C;
+}
+
+.password-strength-fill.medium {
+    width: 66%;
+    background-color: #F59E0B;
+}
+
+.password-strength-fill.strong {
+    width: 100%;
+    background-color: #10B981;
+}
+
+.password-strength-text {
+    font-size: 0.75rem;
+    color: #64748B;
+}

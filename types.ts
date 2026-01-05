@@ -9,9 +9,17 @@ export type ButtonProps = {
 export type InputProps = {
     type: string,
     id: string,
-    className: string,
+    className?: string,
     ariaDescribedby?: string,
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    value?: string,
+    placeholder?: string,
+    required?: boolean,
+    error?: string,
+    isValid?: boolean,
+    disabled?: boolean,
+    min?: string,
+    step?: string
 }
 
 export type LayoutProps = {
