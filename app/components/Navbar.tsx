@@ -4,8 +4,11 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import Link from 'next/link'
 import { IconLogout, IconUserCircle, IconChartBar, IconHome } from '@tabler/icons-react'
+import { useRouter } from 'next/navigation'
 
 export const Navbar = () => {
+  const router = useRouter()
+
   const handleDelete = () => {
     Swal.fire({
       title: "¿Estás seguro de que quieres cerrar sesión?",
@@ -26,7 +29,7 @@ export const Navbar = () => {
         setTimeout(() => {        
           if (result.isConfirmed) {
             axios.get('http://localhost:3930/logout').then((res) => {
-              location.reload()            
+              router.push('/login')
             }).catch((err) => {
               console.log(err)
             })

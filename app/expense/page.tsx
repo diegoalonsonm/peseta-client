@@ -16,13 +16,13 @@ const Expense = () => {
   const [amountError, setAmountError] = useState('')
   const [categoryError, setCategoryError] = useState('')
 
+  const router = useRouter()
+  
   var email = ''
 
   if (typeof window !== 'undefined') {
     email = localStorage.getItem('email') ?? ''
   }
-
-  const router = useRouter()
 
   const validateDescription = (desc: string) => {
     if (!desc.trim()) {

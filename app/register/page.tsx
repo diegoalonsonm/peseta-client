@@ -114,6 +114,7 @@ const Register = () => {
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, {name, lastName, email, password}).then((res) => {
       Swal.fire('Éxito', 'Usuario registrado exitosamente', 'success')
       router.push('/')
+      localStorage.setItem('email', email)
     }).catch((err): void => {
       if (err.response?.status === 409) {
         Swal.fire('El usuario ya existe', 'Intenta usar un nuevo correo electrónico', 'error')
