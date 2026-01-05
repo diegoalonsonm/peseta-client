@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import IncomeExpenseCard from "./components/IncomeExpenseCard";
+import EmptyState from "./components/EmptyState";
 import Link from "next/link";
+import { IconReceipt, IconCoin } from "@tabler/icons-react";
 
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -63,44 +65,72 @@ export default function Home() {
                     Tus últimos 5 gastos
                   </h4>
                   <div>
-                    {expenses.map((expense: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
-                      <IncomeExpenseCard
-                        key={expense.id}
-                        description={expense.description}
-                        category={expense.categoryId}
-                        amount={expense.amount}
-                        date={expense.date}
+                    {expenses.length > 0 ? (
+                      <>
+                        {expenses.map((expense: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
+                          <IncomeExpenseCard
+                            key={expense.id}
+                            description={expense.description}
+                            category={expense.categoryId}
+                            amount={expense.amount}
+                            date={expense.date}
+                          />
+                        ))}
+                        <div className="mt-3">
+                          <Link className="btn btn-info text-white" href="/expense">
+                            Agregar nuevo gasto
+                          </Link>
+                          <Link className="btn btn-secondary ms-2" href="/expense/all">
+                            Ver todos los gastos
+                          </Link>
+                        </div>
+                      </>
+                    ) : (
+                      <EmptyState
+                        icon={<IconReceipt />}
+                        title="No hay gastos aún"
+                        message="¿Listo para registrar tu primer gasto y empezar a controlar tus finanzas?"
+                        actionText="Agregar primer gasto"
+                        actionLink="/expense"
                       />
-                    ))}
+                    )}
                   </div>
-                  <Link className="btn btn-info text-white" href="/expense">
-                    Agregar nuevo gasto
-                  </Link>
-                  <Link className="btn btn-secondary ms-2" href="/expense/all">
-                    Ver todos los gastos
-                  </Link>
                 </div>
                 <div className="col-12 col-md-6">
                   <h4 className="mt-5 mb-3">
                     Tus últimos 5 ingresos
                   </h4>
                   <div>
-                    {incomes.map((income: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
-                      <IncomeExpenseCard
-                        key={income.id}
-                        description={income.description}
-                        category={income.categoryId}
-                        amount={income.amount}
-                        date={income.date}
+                    {incomes.length > 0 ? (
+                      <>
+                        {incomes.map((income: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
+                          <IncomeExpenseCard
+                            key={income.id}
+                            description={income.description}
+                            category={income.categoryId}
+                            amount={income.amount}
+                            date={income.date}
+                          />
+                        ))}
+                        <div className="mt-3">
+                          <Link className="btn btn-info text-white" href="/income">
+                            Agregar nuevo ingreso
+                          </Link>
+                          <Link className="btn btn-secondary ms-2" href="/income/all">
+                            Ver todos los ingresos
+                          </Link>
+                        </div>
+                      </>
+                    ) : (
+                      <EmptyState
+                        icon={<IconCoin />}
+                        title="No hay ingresos aún"
+                        message="Comienza agregando tu primer ingreso para tener un mejor control de tus finanzas."
+                        actionText="Agregar primer ingreso"
+                        actionLink="/income"
                       />
-                    ))}
+                    )}
                   </div>
-                  <Link className="btn btn-info text-white" href="/income">
-                    Agregar nuevo ingreso
-                  </Link>
-                  <Link className="btn btn-secondary ms-2" href="/income/all">
-                    Ver todos los ingresos
-                  </Link>
                 </div>
               </div>
             </div>                    

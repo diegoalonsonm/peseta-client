@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Cash Controller is a personal finance tracking PWA built with Next.js 14 (App Router). The application allows users to log incomes and expenses, view transaction history, and maintain a positive monthly balance. This is the client-side repository that communicates with a backend API running on `localhost:3930`.
+Peseta is a personal finance tracking PWA built with Next.js 14 (App Router). The application allows users to log incomes and expenses, view transaction history, and maintain a positive monthly balance. This is the client-side repository that communicates with a backend API running on `localhost:3930`.
 
 ## Development Commands
 

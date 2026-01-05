@@ -24,7 +24,7 @@ const Login = () => {
         Swal.fire({
           icon: 'success',
           title: 'Inicio de sesión exitoso',
-          text: 'Bienvenido a Cash Controller'
+          text: 'Bienvenido a Peseta'
         })
         router.push('/')
         localStorage.setItem('email', email)
@@ -51,7 +51,7 @@ const Login = () => {
     <>
       <div className="d-flex justify-content-center align-items-center" style={{height: "calc(100vh - 56px)"}}>
         <div className="card width-50">
-          <h5 className="card-header text-center">Iniciar sesión en Cash Controller</h5>
+          <h5 className="card-header text-center">Iniciar sesión en Peseta</h5>
           <div className="card-body">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">

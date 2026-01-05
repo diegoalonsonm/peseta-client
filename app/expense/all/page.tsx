@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
 import IncomeExpenseCard from "../../components/IncomeExpenseCard"
+import EmptyState from "../../components/EmptyState"
+import { IconReceipt } from "@tabler/icons-react"
 
 const AllExpenses = () => {
     const [expenses, setExpenses] = useState([])
@@ -36,20 +38,32 @@ const AllExpenses = () => {
                 </h2>
             </div>
         </div>
-        <div className="row mt-2 text-center">
-            <p className='h4 fw-normal'>Total gastado: <span className='text-info-emphasis'>{amount}</span></p> 
-        </div>
+        {expenses.length > 0 && (
+            <div className="row mt-2 text-center">
+                <p className='h4 fw-normal'>Total gastado: <span className='text-info-emphasis'>{amount}</span></p>
+            </div>
+        )}
         <div className="row width-50 mt-3 mx-auto">
             <div className="col">
-                {expenses.map((expense: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
-                    <IncomeExpenseCard
-                        key={expense.id}
-                        description={expense.description}
-                        category={expense.categoryId}
-                        amount={expense.amount}
-                        date={expense.date}
+                {expenses.length > 0 ? (
+                    expenses.map((expense: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
+                        <IncomeExpenseCard
+                            key={expense.id}
+                            description={expense.description}
+                            category={expense.categoryId}
+                            amount={expense.amount}
+                            date={expense.date}
+                        />
+                    ))
+                ) : (
+                    <EmptyState
+                        icon={<IconReceipt />}
+                        title="No hay gastos registrados"
+                        message="Aún no has registrado ningún gasto. ¿Quieres empezar a controlar tus finanzas?"
+                        actionText="Agregar primer gasto"
+                        actionLink="/expense"
                     />
-                ))}            
+                )}
             </div>
         </div>
     </div>

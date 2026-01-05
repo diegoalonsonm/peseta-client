@@ -7,7 +7,7 @@ import Layout from "./components/Layout";
 const gabarito = Gabarito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cash Controller",
+  title: "Peseta",
   description: "The best way for you to have control over your money.",
   keywords: "cash, controller, money, control, finance, budget, expenses, savings",
   // manifest: "/manifest.json",

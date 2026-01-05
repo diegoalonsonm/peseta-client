@@ -20,3 +20,33 @@ body {
     width: 200px;
     height: 200px;
 }
+
+/* Empty State Styles */
+.empty-state {
+    padding: 3rem 1rem;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.empty-state-icon {
+    color: #6c757d;
+    opacity: 0.5;
+}
+
+.empty-state-icon svg {
+    width: 80px;
+    height: 80px;
+}
+
+.empty-state-title {
+    color: #495057;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 500px) {
+    .empty-state-icon svg {
+        width: 60px;
+        height: 60px;
+    }
+}

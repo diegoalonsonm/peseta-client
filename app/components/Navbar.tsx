@@ -20,7 +20,7 @@ export const Navbar = () => {
         Swal.fire({
           icon: 'success',
           title: 'Sesión cerrada exitosamente',
-          text: '¡Gracias por usar Cash Controller!'
+          text: '¡Gracias por usar Peseta!'
         })
         localStorage.removeItem('email')
         setTimeout(() => {        
@@ -40,14 +40,14 @@ export const Navbar = () => {
   <nav className="navbar bg-body-tertiary mx-md-5">
     <div className="container-fluid">
       <Link href="/" className='navbar-brand'>
-        Cash Controller
+        Peseta
       </Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="offcanvas offcanvas-end" tabIndex={-1} id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Cash Controller</h5>
+          <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Peseta</h5>
           <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className="offcanvas-body">

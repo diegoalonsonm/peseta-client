@@ -29,7 +29,7 @@ const Register = () => {
       } else {
         Swal.fire('Error', 'Ocurrió un error', 'error')
         console.log(err.message)
-        return
+        return  
       }
     })
   }
@@ -38,7 +38,7 @@ const Register = () => {
     <>
       <div className="d-flex justify-content-center align-items-center" style={{height: "calc(100vh - 56px)"}}>
         <div className="card width-50">
-          <h5 className="card-header text-center">Registrarse en Cash Controller</h5>
+          <h5 className="card-header text-center">Registrarse en Peseta</h5>
           <div className="card-body">
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
