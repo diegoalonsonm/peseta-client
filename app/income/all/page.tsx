@@ -5,19 +5,21 @@ import axios from "axios"
 import IncomeExpenseCard from "../../components/IncomeExpenseCard"
 import EmptyState from "../../components/EmptyState"
 import SkeletonCard from "../../components/SkeletonCard"
+import PullToRefresh from "../../components/PullToRefresh"
 import { IconCoin } from "@tabler/icons-react"
 
 const AllIncomes = () => {
     const [incomes, setIncomes] = useState([])
     const [amount, setAmount] = useState(0.0)
     const [isLoading, setIsLoading] = useState(true)
+    const [isScrolled, setIsScrolled] = useState(false)
 
     axios.defaults.withCredentials = true
 
-    useEffect(() => {
+    const fetchIncomes = async () => {
         const email = localStorage.getItem('email')
 
-        Promise.all([
+        return Promise.all([
             axios.get(`${process.env.NEXT_PUBLIC_API_URL}/incomes/${email}`),
             axios.get(`${process.env.NEXT_PUBLIC_API_URL}/incomes/total/${email}`)
         ]).then(([incomesRes, totalRes]) => {
@@ -25,58 +27,78 @@ const AllIncomes = () => {
             setAmount(totalRes.data[0].totalAmount)
         }).catch((err) => {
             console.log(err)
-        }).finally(() => {
+        })
+    }
+
+    const handleRefresh = async () => {
+        await fetchIncomes()
+    }
+
+    useEffect(() => {
+        setIsLoading(true)
+        fetchIncomes().finally(() => {
             setIsLoading(false)
         })
+    }, [])
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
   return (
-    <div className='container'>
-        <div className="row mt-2 text-center">
-            <div className="col">
-                <h2>
-                    Todos los Ingresos
-                </h2>
-            </div>
-        </div>
-        {!isLoading && incomes.length > 0 && (
-            <div className="row mt-2 text-center">
-                <p className='h4 fw-normal'>Total ingresado: <span className='text-info-emphasis'>{amount}</span></p>
-            </div>
-        )}
-        <div className="row width-50 mt-3 mx-auto">
-            <div className="col">
-                {isLoading ? (
-                    <>
-                        <SkeletonCard />
-                        <SkeletonCard />
-                        <SkeletonCard />
-                        <SkeletonCard />
-                        <SkeletonCard />
-                    </>
-                ) : incomes.length > 0 ? (
-                    incomes.map((income: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
-                        <IncomeExpenseCard
-                            key={income.id}
-                            description={income.description}
-                            category={income.categoryId}
-                            amount={income.amount}
-                            date={income.date}
-                        />
-                    ))
-                ) : (
-                    <EmptyState
-                        icon={<IconCoin />}
-                        title="No hay ingresos registrados"
-                        message="Aún no has registrado ningún ingreso. Comienza a trackear tus entradas de dinero."
-                        actionText="Agregar primer ingreso"
-                        actionLink="/income"
-                    />
-                )}
-            </div>
-        </div>
-    </div>
+    <PullToRefresh onRefresh={handleRefresh}>
+      <div className='container'>
+          <div className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
+              <div className="row text-center">
+                  <div className="col">
+                      <h2>Todos los Ingresos</h2>
+                      {!isLoading && incomes.length > 0 && (
+                          <p className='h4 fw-normal mt-2'>
+                              Total ingresado: <span className='text-info-emphasis'>₡{amount.toFixed(2)}</span>
+                          </p>
+                      )}
+                  </div>
+              </div>
+          </div>
+          <div className="row width-50 mt-3 mx-auto">
+              <div className="col">
+                  {isLoading ? (
+                      <>
+                          <SkeletonCard />
+                          <SkeletonCard />
+                          <SkeletonCard />
+                          <SkeletonCard />
+                          <SkeletonCard />
+                      </>
+                  ) : incomes.length > 0 ? (
+                      incomes.map((income: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
+                          <IncomeExpenseCard
+                              key={income.id}
+                              id={income.id}
+                              description={income.description}
+                              category={income.categoryId}
+                              amount={income.amount}
+                              date={income.date}
+                          />
+                      ))
+                  ) : (
+                      <EmptyState
+                          icon={<IconCoin />}
+                          title="No hay ingresos registrados"
+                          message="Aún no has registrado ningún ingreso. Comienza a trackear tus entradas de dinero."
+                          actionText="Agregar primer ingreso"
+                          actionLink="/income"
+                      />
+                  )}
+              </div>
+          </div>
+      </div>
+    </PullToRefresh>
   )
 }
 

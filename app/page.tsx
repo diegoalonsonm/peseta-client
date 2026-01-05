@@ -75,6 +75,7 @@ export default function Home() {
                   {expenses.map((expense: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
                     <IncomeExpenseCard
                       key={expense.id}
+                      id={expense.id}
                       description={expense.description}
                       category={expense.categoryId}
                       amount={expense.amount}
@@ -111,6 +112,7 @@ export default function Home() {
                   {incomes.map((income: { id: string, description: string, categoryId: number, amount: number, date: string }) => (
                     <IncomeExpenseCard
                       key={income.id}
+                      id={income.id}
                       description={income.description}
                       category={income.categoryId}
                       amount={income.amount}

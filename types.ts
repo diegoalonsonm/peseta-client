@@ -29,6 +29,7 @@ export type LayoutProps = {
 }
 
 export type IncomeExpenseProps = {
+    id?: string,
     amount: number,
     description: string,
     date: string,
