@@ -10,6 +10,7 @@ const Income = () => {
   const [description, setDescription] = useState('')
   const [amount, setAmount] = useState(0.0)
   const [category, setCategory] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   var email = ''
 
   if (typeof window !== 'undefined') {
@@ -28,7 +29,8 @@ const Income = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
+    setIsSubmitting(true)
+
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/incomes`, data).then((res) => {
       if (res.data) {
         cleanInputs()
@@ -52,6 +54,8 @@ const Income = () => {
         text: 'Hubo un error agregando el ingreso'
       })
       console.log(err)
+    }).finally(() => {
+      setIsSubmitting(false)
     })
   }
 
@@ -88,7 +92,20 @@ const Income = () => {
                 <option value="15">Otro</option>
               </select>
             </div>
-            <Button type="submit" className='btn-info text-white' text='Agregar ingreso' />
+            <button
+              type="submit"
+              className='btn btn-info text-white'
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Agregando...
+                </>
+              ) : (
+                'Agregar ingreso'
+              )}
+            </button>
           </form>
         </div>
       </div>

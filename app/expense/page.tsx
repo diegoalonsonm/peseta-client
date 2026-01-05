@@ -10,6 +10,7 @@ const Expense = () => {
   const [description, setDescription] = useState('')
   const [amount, setAmount] = useState(0.0)
   const [category, setCategory] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   var email = ''
 
   if (typeof window !== 'undefined') {
@@ -22,7 +23,8 @@ const Expense = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
+    setIsSubmitting(true)
+
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, data).then((res) => {
       if (res.data) {
         Swal.fire({
@@ -45,6 +47,8 @@ const Expense = () => {
         text: 'Hubo un error agregando el gasto'
       })
       console.log(err)
+    }).finally(() => {
+      setIsSubmitting(false)
     })
   }
 
@@ -83,7 +87,20 @@ const Expense = () => {
                 <option value="15">Otro</option>
               </select>
             </div>
-            <Button type="submit" className='btn-info text-white' text='Agregar gasto' />
+            <button
+              type="submit"
+              className='btn btn-info text-white'
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Agregando...
+                </>
+              ) : (
+                'Agregar gasto'
+              )}
+            </button>
           </form>
         </div>
       </div>

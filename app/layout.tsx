@@ -10,10 +10,6 @@ export const metadata: Metadata = {
   title: "Peseta",
   description: "The best way for you to have control over your money.",
   keywords: "cash, controller, money, control, finance, budget, expenses, savings",
-  // manifest: "/manifest.json",
-  icons: {
-    apple: "/icon.png",
-  }
 };
 
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode}>) {
