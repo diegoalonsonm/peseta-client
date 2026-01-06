@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import { Input } from '../components/Input'
 import PasswordStrength from '../components/PasswordStrength'
+import { IconUser, IconMail, IconLock } from '@tabler/icons-react'
 
 const Register = () => {
   const [name, setName] = useState('')
@@ -135,59 +136,72 @@ const Register = () => {
           <h5 className="card-header text-center">Registrarse en Peseta</h5>
           <div className="card-body">
             <form onSubmit={handleSubmit}>
+                <Input
+                  type="text"
+                  id="registerName"
+                  label="Nombre"
+                  value={name}
+                  onChange={handleNameChange}
+                  error={nameError}
+                  isValid={!nameError && name.length > 0}
+                  placeholder="Tu nombre"
+                  disabled={isSubmitting}
+                  icon={<IconUser size={20} />}
+                  floatingLabel={true}
+                  helperText="Mínimo 2 caracteres"
+                  required={true}
+                />
+
+                <Input
+                  type="text"
+                  id="registerLastName"
+                  label="Apellido"
+                  value={lastName}
+                  onChange={handleLastNameChange}
+                  error={lastNameError}
+                  isValid={!lastNameError && lastName.length > 0}
+                  placeholder="Tu apellido"
+                  disabled={isSubmitting}
+                  icon={<IconUser size={20} />}
+                  floatingLabel={true}
+                  helperText="Mínimo 2 caracteres"
+                  required={true}
+                />
+
+                <Input
+                  type="email"
+                  id="registerEmail"
+                  label="Correo electrónico"
+                  value={email}
+                  onChange={handleEmailChange}
+                  error={emailError}
+                  isValid={!emailError && email.length > 0}
+                  placeholder="tu@email.com"
+                  disabled={isSubmitting}
+                  icon={<IconMail size={20} />}
+                  floatingLabel={true}
+                  required={true}
+                />
+
                 <div className="mb-3">
-                    <label htmlFor="registerName" className="form-label">Nombre</label>
-                    <Input
-                      type="text"
-                      id="registerName"
-                      value={name}
-                      onChange={handleNameChange}
-                      error={nameError}
-                      isValid={!nameError && name.length > 0}
-                      placeholder="Tu nombre"
-                      disabled={isSubmitting}
-                    />
+                  <Input
+                    type="password"
+                    id="registerPassword"
+                    label="Contraseña"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    error={passwordError}
+                    isValid={!passwordError && password.length >= 6}
+                    placeholder="Mínimo 6 caracteres"
+                    disabled={isSubmitting}
+                    icon={<IconLock size={20} />}
+                    floatingLabel={true}
+                    helperText="Mínimo 6 caracteres"
+                    required={true}
+                  />
+                  <PasswordStrength password={password} />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="registerLastName" className="form-label">Apellido</label>
-                    <Input
-                      type="text"
-                      id="registerLastName"
-                      value={lastName}
-                      onChange={handleLastNameChange}
-                      error={lastNameError}
-                      isValid={!lastNameError && lastName.length > 0}
-                      placeholder="Tu apellido"
-                      disabled={isSubmitting}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="registerEmail" className="form-label">Dirección de correo electrónico</label>
-                    <Input
-                      type="email"
-                      id="registerEmail"
-                      value={email}
-                      onChange={handleEmailChange}
-                      error={emailError}
-                      isValid={!emailError && email.length > 0}
-                      placeholder="tu@email.com"
-                      disabled={isSubmitting}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="registerPassword" className="form-label">Contraseña</label>
-                    <Input
-                      type="password"
-                      id="registerPassword"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      error={passwordError}
-                      isValid={!passwordError && password.length >= 6}
-                      placeholder="Mínimo 6 caracteres"
-                      disabled={isSubmitting}
-                    />
-                    <PasswordStrength password={password} />
-                </div>
+
                 <button
                   type="submit"
                   className='btn btn-primary'

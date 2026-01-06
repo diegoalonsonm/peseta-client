@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 import { Input } from '../components/Input'
+import CategorySelector from '../components/CategorySelector'
 import BackButton from '../components/BackButton'
 import Breadcrumbs from '../components/Breadcrumbs'
+import { IconFileDescription, IconCurrencyDollar } from '@tabler/icons-react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from "next/navigation"
@@ -138,24 +140,29 @@ const Income = () => {
       <div className="row mt-3 mx-auto width-50">
         <div className="col">
           <form onSubmit={handleSubmit}>
-            <div className="form-group mb-3">
-              <label htmlFor="description">Descripción</label>
+            <div className="form-card">
+              <h3 className="form-section-title">Detalles del Ingreso</h3>
+
               <Input
                 type="text"
                 id="description"
+                label="Descripción"
                 value={description}
                 onChange={handleDescriptionChange}
                 error={descriptionError}
                 isValid={!descriptionError && description.length > 0}
                 placeholder="Ej: Salario, inversión, etc."
                 disabled={isSubmitting}
+                icon={<IconFileDescription size={20} />}
+                floatingLabel={true}
+                helperText="Describe brevemente tu ingreso"
+                required={true}
               />
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="amount">Cantidad</label>
+
               <Input
                 type="number"
                 id="amount"
+                label="Cantidad"
                 value={amount}
                 onChange={handleAmountChange}
                 error={amountError}
@@ -164,42 +171,40 @@ const Income = () => {
                 disabled={isSubmitting}
                 min="1"
                 step="1"
+                icon={<IconCurrencyDollar size={20} />}
+                floatingLabel={true}
+                helperText="Monto mínimo: ₡1"
+                required={true}
+              />
+
+              <CategorySelector
+                selectedCategory={category}
+                onChange={(categoryId) => {
+                  setCategory(categoryId)
+                  validateCategory(categoryId)
+                }}
+                type="income"
+                error={categoryError}
+                disabled={isSubmitting}
               />
             </div>
-            <div className="form-group mb-3">
-              <label htmlFor="category">Categoría</label>
-              <select
-                className={`form-control ${categoryError ? 'is-invalid' : category > 0 ? 'is-valid' : ''}`}
-                id="category"
-                value={category}
-                onChange={handleCategoryChange}
+
+            <div className="form-actions">
+              <button
+                type="submit"
+                className='btn btn-info text-white'
                 disabled={isSubmitting}
               >
-                <option value="0">Selecciona la categoría correspondiente</option>
-                <option value="9">Salario</option>
-                <option value="10">Inversión</option>
-                <option value="11">Regalo</option>
-                <option value="12">Ahorros</option>
-                <option value="13">Préstamos</option>
-                <option value="14">Seguro</option>
-                <option value="15">Otro</option>
-              </select>
-              {categoryError && <div className="invalid-feedback d-block">{categoryError}</div>}
+                {isSubmitting ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Agregando...
+                  </>
+                ) : (
+                  'Agregar ingreso'
+                )}
+              </button>
             </div>
-            <button
-              type="submit"
-              className='btn btn-info text-white'
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                  Agregando...
-                </>
-              ) : (
-                'Agregar ingreso'
-              )}
-            </button>
           </form>
         </div>
       </div>

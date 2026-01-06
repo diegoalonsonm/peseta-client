@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 import { Button } from '../components/Button'
 import { Input } from '../components/Input'
+import { IconMail, IconLock } from '@tabler/icons-react'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -103,32 +104,37 @@ const Login = () => {
           <h5 className="card-header text-center">Iniciar sesión en Peseta</h5>
           <div className="card-body">
             <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="loginEmail" className="form-label">Dirección de correo electrónico</label>
-                <Input
-                  type="email"
-                  id='loginEmail'
-                  value={email}
-                  onChange={handleEmailChange}
-                  error={emailError}
-                  isValid={!emailError && email.length > 0}
-                  placeholder="tu@email.com"
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="loginPass" className="form-label">Contraseña</label>
-                <Input
-                  type="password"
-                  id="loginPass"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  error={passwordError}
-                  isValid={!passwordError && password.length > 0}
-                  placeholder="Ingresa tu contraseña"
-                  disabled={isSubmitting}
-                />
-              </div>
+              <Input
+                type="email"
+                id='loginEmail'
+                label="Correo electrónico"
+                value={email}
+                onChange={handleEmailChange}
+                error={emailError}
+                isValid={!emailError && email.length > 0}
+                placeholder="tu@email.com"
+                disabled={isSubmitting}
+                icon={<IconMail size={20} />}
+                floatingLabel={true}
+                required={true}
+              />
+
+              <Input
+                type="password"
+                id="loginPass"
+                label="Contraseña"
+                value={password}
+                onChange={handlePasswordChange}
+                error={passwordError}
+                isValid={!passwordError && password.length > 0}
+                placeholder="Ingresa tu contraseña"
+                disabled={isSubmitting}
+                icon={<IconLock size={20} />}
+                floatingLabel={true}
+                helperText="Mínimo 6 caracteres"
+                required={true}
+              />
+
               <div className="mb-3 d-flex align-items-center">
                 <button
                   type="submit"

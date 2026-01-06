@@ -15,7 +15,11 @@ export const Input = ({
     isValid,
     disabled = false,
     min,
-    step
+    step,
+    icon,
+    helperText,
+    floatingLabel = false,
+    label
 }: InputProps) => {
 
     // Determine validation class
@@ -26,35 +30,95 @@ export const Input = ({
         validationClass = 'is-valid'
     }
 
-    return (
-        <div className="position-relative">
-            <input
-                type={type}
-                className={`form-control ${validationClass} ${className}`}
-                id={id}
-                aria-describedby={ariaDescribedby}
-                onChange={onChange}
-                value={value}
-                placeholder={placeholder}
-                required={required}
-                disabled={disabled}
-                min={min}
-                step={step}
-            />
-            {isValid && value && !error && (
-                <div className="valid-feedback-icon">
-                    <IconCheck size={20} />
+    const hasIcon = !!icon
+
+    // Floating label variant
+    if (floatingLabel) {
+        return (
+            <div className="form-floating-wrapper">
+                <div className={`position-relative ${hasIcon ? 'has-icon' : ''}`}>
+                    {icon && <div className="input-icon-prefix">{icon}</div>}
+                    <div className="form-floating">
+                        <input
+                            type={type}
+                            className={`form-control ${validationClass} ${className} ${hasIcon ? 'with-icon' : ''}`}
+                            id={id}
+                            aria-describedby={ariaDescribedby}
+                            onChange={onChange}
+                            value={value}
+                            placeholder={placeholder || ' '}
+                            required={required}
+                            disabled={disabled}
+                            min={min}
+                            step={step}
+                        />
+                        {label && (
+                            <label htmlFor={id}>{label}{required && ' *'}</label>
+                        )}
+                    </div>
+                    {isValid && value && !error && (
+                        <div className="valid-feedback-icon">
+                            <IconCheck size={20} />
+                        </div>
+                    )}
+                    {error && (
+                        <div className="invalid-feedback-icon">
+                            <IconAlertCircle size={20} />
+                        </div>
+                    )}
                 </div>
-            )}
-            {error && (
-                <>
+                {error && (
+                    <div className="invalid-feedback d-block mt-1">
+                        {error}
+                    </div>
+                )}
+                {helperText && !error && (
+                    <div className="form-helper-text">
+                        {helperText}
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+    // Standard variant
+    return (
+        <div className="input-wrapper">
+            <div className={`position-relative ${hasIcon ? 'has-icon' : ''}`}>
+                {icon && <div className="input-icon-prefix">{icon}</div>}
+                <input
+                    type={type}
+                    className={`form-control ${validationClass} ${className} ${hasIcon ? 'with-icon' : ''}`}
+                    id={id}
+                    aria-describedby={ariaDescribedby}
+                    onChange={onChange}
+                    value={value}
+                    placeholder={placeholder}
+                    required={required}
+                    disabled={disabled}
+                    min={min}
+                    step={step}
+                />
+                {isValid && value && !error && (
+                    <div className="valid-feedback-icon">
+                        <IconCheck size={20} />
+                    </div>
+                )}
+                {error && (
                     <div className="invalid-feedback-icon">
                         <IconAlertCircle size={20} />
                     </div>
-                    <div className="invalid-feedback d-block">
-                        {error}
-                    </div>
-                </>
+                )}
+            </div>
+            {error && (
+                <div className="invalid-feedback d-block mt-1">
+                    {error}
+                </div>
+            )}
+            {helperText && !error && (
+                <div className="form-helper-text">
+                    {helperText}
+                </div>
             )}
         </div>
     )

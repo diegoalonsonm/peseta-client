@@ -7,7 +7,8 @@ import {
   IconChefHat, IconBus, IconFirstAidKit, IconSchool, IconBuildingCarousel,
   IconShirt, IconHome, IconBulb, IconCoin, IconChartLine, IconGift,
   IconPigMoney, IconBuildingBank, IconCoins, IconGrain,
-  IconEdit, IconTrash
+  IconEdit, IconTrash, IconShieldCheck, IconDeviceTv, IconScissors, IconPaw,
+  IconArmchair, IconCreditCard, IconBriefcase, IconBuildingStore
 } from '@tabler/icons-react'
 import Swal from 'sweetalert2'
 
@@ -31,31 +32,41 @@ export default function IncomeExpenseCard({ id, description, amount, date, categ
       case 9: return <IconCoin size={size} />
       case 10: return <IconChartLine size={size} />
       case 11: return <IconGift size={size} />
-      case 12: return <IconPigMoney size={size} />
-      case 13: return <IconBuildingBank size={size} />
-      case 14: return <IconCoins size={size} />
+      case 14: return <IconShieldCheck size={size} />
       case 15: return <IconGrain size={size} />
+      case 16: return <IconDeviceTv size={size} />
+      case 17: return <IconScissors size={size} />
+      case 18: return <IconPaw size={size} />
+      case 19: return <IconArmchair size={size} />
+      case 20: return <IconCreditCard size={size} />
+      case 21: return <IconBriefcase size={size} />
+      case 22: return <IconBuildingStore size={size} />
       default: return <IconGrain size={size} />
     }
   }
 
   const getCategoryColor = () => {
     switch (category) {
-      case 1: return '#F59E0B' // Comida - Amber
-      case 2: return '#3B82F6' // Transporte - Blue
-      case 3: return '#EF4444' // Salud - Red
-      case 4: return '#8B5CF6' // Educación - Purple
-      case 5: return '#EC4899' // Entretenimiento - Pink
-      case 6: return '#06B6D4' // Ropa - Cyan
-      case 7: return '#14B8A6' // Alquiler - Teal
-      case 8: return '#F59E0B' // Servicios - Amber
-      case 9: return '#10B981' // Salario - Emerald
-      case 10: return '#059669' // Inversión - Green
-      case 11: return '#EC4899' // Regalo - Pink
-      case 12: return '#8B5CF6' // Ahorros - Purple
-      case 13: return '#3B82F6' // Préstamos - Blue
-      case 14: return '#10B981' // Seguro - Emerald
-      case 15: return '#64748B' // Otro - Slate
+      case 1: return '#F59E0B' 
+      case 2: return '#3B82F6' 
+      case 3: return '#EF4444' 
+      case 4: return '#8B5CF6' 
+      case 5: return '#EC4899' 
+      case 6: return '#06B6D4' 
+      case 7: return '#14B8A6' 
+      case 8: return '#F59E0B' 
+      case 9: return '#10B981' 
+      case 10: return '#059669' 
+      case 11: return '#EC4899' 
+      case 14: return '#3B82F6' 
+      case 15: return '#64748B' 
+      case 16: return '#8B5CF6' 
+      case 17: return '#EC4899' 
+      case 18: return '#F97316' 
+      case 19: return '#059669' 
+      case 20: return '#DC2626' 
+      case 21: return '#8B5CF6' 
+      case 22: return '#3B82F6' 
       default: return '#64748B'
     }
   }

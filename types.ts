@@ -9,6 +9,7 @@ export type ButtonProps = {
 export type InputProps = {
     type: string,
     id: string,
+    label?: string,
     className?: string,
     ariaDescribedby?: string,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -19,7 +20,10 @@ export type InputProps = {
     isValid?: boolean,
     disabled?: boolean,
     min?: string,
-    step?: string
+    step?: string,
+    icon?: React.ReactNode,
+    helperText?: string,
+    floatingLabel?: boolean
 }
 
 export type LayoutProps = {
