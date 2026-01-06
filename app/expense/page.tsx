@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { Input } from '../components/Input'
+import BackButton from '../components/BackButton'
+import Breadcrumbs from '../components/Breadcrumbs'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
@@ -120,7 +122,15 @@ const Expense = () => {
 
   return (
     <div className="container">
-      <div className="row text-center mt-5">
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Gastos' },
+          { label: 'Nuevo Gasto' }
+        ]}
+      />
+      <BackButton href="/" text="Volver al inicio" />
+      <div className="row text-center mt-3">
         <div className="col">
           <h2>Nuevo Gasto</h2>
         </div>

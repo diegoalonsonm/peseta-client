@@ -6,6 +6,7 @@ import IncomeExpenseCard from "../../components/IncomeExpenseCard"
 import EmptyState from "../../components/EmptyState"
 import SkeletonCard from "../../components/SkeletonCard"
 import PullToRefresh from "../../components/PullToRefresh"
+import Breadcrumbs from "../../components/Breadcrumbs"
 import { IconReceipt } from "@tabler/icons-react"
 
 const AllExpenses = () => {
@@ -53,6 +54,13 @@ const AllExpenses = () => {
   return (
     <PullToRefresh onRefresh={handleRefresh}>
       <div className='container'>
+          <Breadcrumbs
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Gastos', href: '/expense' },
+              { label: 'Todos los Gastos' }
+            ]}
+          />
           <div className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
               <div className="row text-center">
                   <div className="col">
