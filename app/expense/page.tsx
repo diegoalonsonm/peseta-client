@@ -5,7 +5,7 @@ import { Input } from '../components/Input'
 import CategorySelector from '../components/CategorySelector'
 import BackButton from '../components/BackButton'
 import Breadcrumbs from '../components/Breadcrumbs'
-import { IconFileDescription, IconCurrencyDollar } from '@tabler/icons-react'
+import { IconFileDescription, IconCoins } from '@tabler/icons-react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
@@ -171,7 +171,7 @@ const Expense = () => {
                 disabled={isSubmitting}
                 min="1"
                 step="1"
-                icon={<IconCurrencyDollar size={20} />}
+                icon={<IconCoins size={20} />}
                 floatingLabel={true}
                 helperText="Monto mínimo: ₡1"
                 required={true}

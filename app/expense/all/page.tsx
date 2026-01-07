@@ -25,7 +25,7 @@ const AllExpenses = () => {
             axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/totalAmount/${email}`)
         ]).then(([expensesRes, totalRes]) => {
             setExpenses(expensesRes.data)
-            setAmount(totalRes.data[0].totalAmount)
+            setAmount(parseFloat(totalRes.data[0]?.totalAmount) || 0)
         }).catch((err) => {
             console.log(err)
         })

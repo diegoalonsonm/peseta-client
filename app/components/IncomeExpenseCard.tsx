@@ -11,6 +11,7 @@ import {
   IconArmchair, IconCreditCard, IconBriefcase, IconBuildingStore
 } from '@tabler/icons-react'
 import Swal from 'sweetalert2'
+import axios from 'axios'
 
 export default function IncomeExpenseCard({ id, description, amount, date, category }: IncomeExpenseProps) {
   const [isHovered, setIsHovered] = useState(false)
@@ -107,17 +108,37 @@ export default function IncomeExpenseCard({ id, description, amount, date, categ
     }).then((result) => {
       if (result.isConfirmed) {
         setIsDeleting(true)
-        // TODO: Call API to delete transaction
-        setTimeout(() => {
-          console.log('Delete transaction:', id)
+        // Call API to delete transaction
+        const email = localStorage.getItem('email')
+        const API_URL = process.env.NEXT_PUBLIC_API_URL
+
+        // Determine if this is an expense or income based on category
+        const isExpense = [1,2,3,4,5,6,7,8,14,15,16,17,18,19,20].includes(category)
+        const endpoint = isExpense ? 'expenses' : 'incomes'
+
+        axios.delete(`${API_URL}/${endpoint}/${id}`, {
+          data: { email }  // Send email in request body
+        }).then((response) => {
+          setIsDeleting(false)
           Swal.fire({
             title: 'Eliminado',
             text: 'La transacción ha sido eliminada',
             icon: 'success',
             timer: 2000,
             showConfirmButton: false
+          }).then(() => {
+            // Refresh the page to update the list
+            window.location.reload()
           })
-        }, 300)
+        }).catch((err) => {
+          console.error('Error deleting transaction:', err)
+          setIsDeleting(false)
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo eliminar la transacción. Intenta de nuevo.',
+            icon: 'error'
+          })
+        })
       }
     })
   }
@@ -182,7 +203,7 @@ export default function IncomeExpenseCard({ id, description, amount, date, categ
             </button>
             <button
               className="transaction-action-btn transaction-delete-btn"
-              onClick={() => console.log('Delete', id)}
+              onClick={handleDelete}
               title="Eliminar"
             >
               <IconTrash size={18} />

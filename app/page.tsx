@@ -35,7 +35,7 @@ export default function Home() {
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/lastFive/${email}`),
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/incomes/lastFive/${email}`)
       ]).then(([balanceRes, expensesRes, incomesRes]) => {
-        setBalance(balanceRes.data)
+        setBalance(parseFloat(balanceRes.data) || 0)
         setExpenses(expensesRes.data)
         setIncomes(incomesRes.data)
       }).catch((err) => {
