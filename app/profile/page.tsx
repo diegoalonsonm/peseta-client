@@ -164,6 +164,26 @@ const Profile = () => {
             </div>
           </div>
 
+           {/* Security Actions Card */}
+           <div className="form-card mb-4">
+            <div className="profile-card-header">
+              <h3 className="profile-card-title">
+                <IconLock size={24} />
+                Seguridad
+              </h3>
+            </div>
+
+            <div className="profile-actions">
+              <Link href="/profile/edit" className="profile-action-link">
+                <IconLock size={20} />
+                <div>
+                  <div className="profile-action-title">Cambiar Contraseña</div>
+                  <div className="profile-action-description">Actualiza tu contraseña regularmente</div>
+                </div>
+              </Link>
+            </div>
+          </div>
+
           {/* Account Information Card */}
           <div className="form-card mb-4">
             <div className="profile-card-header">
@@ -185,26 +205,6 @@ const Profile = () => {
                   <span className="badge bg-success">Activa</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Security Actions Card */}
-          <div className="form-card mb-4">
-            <div className="profile-card-header">
-              <h3 className="profile-card-title">
-                <IconLock size={24} />
-                Seguridad
-              </h3>
-            </div>
-
-            <div className="profile-actions">
-              <Link href="/profile/edit" className="profile-action-link">
-                <IconLock size={20} />
-                <div>
-                  <div className="profile-action-title">Cambiar Contraseña</div>
-                  <div className="profile-action-description">Actualiza tu contraseña regularmente</div>
-                </div>
-              </Link>
             </div>
           </div>
 
