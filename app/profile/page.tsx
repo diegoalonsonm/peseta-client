@@ -111,7 +111,12 @@ const Profile = () => {
                 width={120}
                 height={120}
               />
-              <button className="profile-picture-edit-btn" title="Cambiar foto">
+              <button
+                className="profile-picture-edit-btn"
+                disabled
+                title="Próximamente"
+                style={{ opacity: 0.5, cursor: 'not-allowed' }}
+              >
                 <IconCamera size={20} />
               </button>
             </div>

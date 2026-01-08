@@ -127,17 +127,26 @@ const EditPage = () => {
             return
         }
 
-        setIsSubmitting(true)
+        // Only send fields that have values (user explicitly filled them in)
+        const updates: any = {}
 
-        // Use original values if fields weren't changed
-        const finalData = {
-            nameData: nameData || nameInput,
-            lastNameData: lastNameData || lastNameInput,
-            passwordData: passwordData || passwordInput,
-            email
+        if (nameData && nameData.trim()) updates.name = nameData
+        if (lastNameData && lastNameData.trim()) updates.lastName = lastNameData
+        if (passwordData && passwordData.trim()) updates.password = passwordData
+
+        // Check if user made any changes
+        if (Object.keys(updates).length === 0) {
+            Swal.fire({
+                title: 'Sin cambios',
+                text: 'No has realizado ningún cambio en tu perfil',
+                icon: 'info'
+            })
+            return
         }
 
-        axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/${email}`, finalData).then(res => {
+        setIsSubmitting(true)
+
+        axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/${email}`, updates).then(res => {
             Swal.fire({
                 icon: 'success',
                 title: 'Éxito',
