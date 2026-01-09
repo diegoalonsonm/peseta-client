@@ -48,13 +48,7 @@ const BudgetsPage = () => {
   }
 
   const handleEdit = (budget: Budget) => {
-    // TODO: Implement edit functionality
-    console.log('Edit budget:', budget)
-    Swal.fire({
-      title: 'Editar Presupuesto',
-      text: 'Funcionalidad de edición en desarrollo',
-      icon: 'info'
-    })
+    router.push(`/budgets/${budget.id}/edit`)
   }
 
   const handleDelete = (budgetId: string) => {

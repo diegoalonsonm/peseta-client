@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useSwipeable } from 'react-swipeable'
 import { IncomeExpenseProps } from '@/types'
 import {
@@ -14,6 +15,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 
 export default function IncomeExpenseCard({ id, description, amount, date, category }: IncomeExpenseProps) {
+  const router = useRouter()
   const [isHovered, setIsHovered] = useState(false)
   const [swipeOffset, setSwipeOffset] = useState(0)
   const [isSwiping, setIsSwiping] = useState(false)
@@ -196,7 +198,12 @@ export default function IncomeExpenseCard({ id, description, amount, date, categ
           <div className={`transaction-actions ${isHovered ? 'transaction-actions-visible' : ''}`}>
             <button
               className="transaction-action-btn transaction-edit-btn"
-              onClick={() => console.log('Edit', id)}
+              onClick={() => {
+                // Determine if it's an expense or income based on category ID
+                const isExpense = [1,2,3,4,5,6,7,8,14,15,16,17,18,19,20].includes(category)
+                const type = isExpense ? 'expense' : 'income'
+                router.push(`/${type}/${id}/edit`)
+              }}
               title="Editar"
             >
               <IconEdit size={18} />

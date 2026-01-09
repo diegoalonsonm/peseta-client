@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { IconHome, IconReceipt, IconCoin, IconChartBar, IconUserCircle } from '@tabler/icons-react'
+import { IconHome, IconReceipt, IconCoin, IconChartBar, IconUserCircle, IconChartPie } from '@tabler/icons-react'
 
 export default function BottomNav() {
   const pathname = usePathname()
@@ -25,7 +25,7 @@ export default function BottomNav() {
         href="/"
         className={`bottom-nav-item ${isActive('/') ? 'active' : ''}`}
       >
-        <IconHome size={24} />
+        <IconHome size={22} />
         <span>Inicio</span>
       </Link>
 
@@ -33,7 +33,7 @@ export default function BottomNav() {
         href="/expense/all"
         className={`bottom-nav-item ${isActive('/expense') ? 'active' : ''}`}
       >
-        <IconReceipt size={24} />
+        <IconReceipt size={22} />
         <span>Gastos</span>
       </Link>
 
@@ -41,15 +41,23 @@ export default function BottomNav() {
         href="/income/all"
         className={`bottom-nav-item ${isActive('/income') ? 'active' : ''}`}
       >
-        <IconCoin size={24} />
+        <IconCoin size={22} />
         <span>Ingresos</span>
+      </Link>
+
+      <Link
+        href="/budgets"
+        className={`bottom-nav-item ${isActive('/budgets') ? 'active' : ''}`}
+      >
+        <IconChartPie size={22} />
+        <span>Presupuestos</span>
       </Link>
 
       <Link
         href="/stats"
         className={`bottom-nav-item ${isActive('/stats') ? 'active' : ''}`}
       >
-        <IconChartBar size={24} />
+        <IconChartBar size={22} />
         <span>Stats</span>
       </Link>
 
@@ -57,7 +65,7 @@ export default function BottomNav() {
         href="/profile"
         className={`bottom-nav-item ${isActive('/profile') ? 'active' : ''}`}
       >
-        <IconUserCircle size={24} />
+        <IconUserCircle size={22} />
         <span>Perfil</span>
       </Link>
     </nav>
