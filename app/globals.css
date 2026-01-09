@@ -2456,3 +2456,133 @@ html {
         font-size: 0.875rem;
     }
 }
+
+/* ============================================
+   BUDGET MODULE STYLES
+   ============================================ */
+
+/* Budget Progress Bar */
+.budget-progress-container {
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 16px;
+}
+
+.budget-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.budget-category-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: #1f2937;
+}
+
+.budget-period-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.budget-status-icon {
+    display: flex;
+    align-items: center;
+}
+
+.budget-details {
+    margin-top: 12px;
+}
+
+.budget-amounts {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 0.875rem;
+}
+
+.budget-spent {
+    color: #374151;
+    font-weight: 600;
+}
+
+.budget-limit {
+    color: #6b7280;
+}
+
+.budget-remaining {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.budget-period-end {
+    font-size: 0.8rem;
+}
+
+/* Budget Card */
+.budget-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.budget-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.budget-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border-radius: 12px;
+}
+
+.budget-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .budget-card {
+        margin-bottom: 16px;
+    }
+
+    .budget-category-name {
+        font-size: 1rem;
+    }
+
+    .budget-icon {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+@media (max-width: 500px) {
+    .budget-progress-container {
+        padding: 12px;
+    }
+
+    .budget-category-name {
+        font-size: 0.95rem;
+    }
+
+    .budget-period-label {
+        font-size: 0.8rem;
+    }
+
+    .budget-icon {
+        width: 40px;
+        height: 40px;
+    }
+}

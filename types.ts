@@ -39,3 +39,38 @@ export type IncomeExpenseProps = {
     date: string,
     category: number
 }
+
+export type PeriodType = 'weekly' | 'biweekly' | 'monthly';
+
+export type Budget = {
+    id: string;
+    userId: string;
+    categoryId: number;
+    categoryName: string;
+    limitAmount: number;
+    periodType: PeriodType;
+    startDate: string;
+    totalSpent: number;
+    remaining: number;
+    percentUsed: number;
+    periodStart: string;
+    periodEnd: string;
+    isOverBudget: boolean;
+    isNearLimit: boolean;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type BudgetFormData = {
+    categoryId: number;
+    limitAmount: string;
+    periodType: PeriodType;
+    startDate: string;
+};
+
+export type BudgetAlerts = {
+    totalAlerts: number;
+    overBudget: Budget[];
+    nearLimit: Budget[];
+};

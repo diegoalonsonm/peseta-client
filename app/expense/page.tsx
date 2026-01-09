@@ -15,6 +15,7 @@ const Expense = () => {
   const [amount, setAmount] = useState('')
   const [category, setCategory] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [budgetInfo, setBudgetInfo] = useState<any>(null)
 
   const [descriptionError, setDescriptionError] = useState('')
   const [amountError, setAmountError] = useState('')
@@ -81,6 +82,17 @@ const Expense = () => {
     setCategory(value)
     if (value) validateCategory(value)
   }
+
+  // Fetch budget when category changes
+  useEffect(() => {
+    if (category > 0 && email) {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/budgets/${email}/category/${category}`)
+        .then(res => setBudgetInfo(res.data))
+        .catch(() => setBudgetInfo(null))
+    } else {
+      setBudgetInfo(null)
+    }
+  }, [category, email])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -187,6 +199,23 @@ const Expense = () => {
                 error={categoryError}
                 disabled={isSubmitting}
               />
+
+              {budgetInfo && (
+                <div className="alert alert-info mt-3">
+                  <h6 className="alert-heading mb-2">Presupuesto de {budgetInfo.categoryName}</h6>
+                  <p className="mb-1">
+                    Disponible: <strong>₡{budgetInfo.remaining.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</strong>
+                  </p>
+                  <p className="mb-0 text-muted">
+                    Has gastado ₡{budgetInfo.totalSpent.toLocaleString('es-CR', { minimumFractionDigits: 2 })} de ₡{budgetInfo.limitAmount.toLocaleString('es-CR', { minimumFractionDigits: 2 })}
+                  </p>
+                  {amount && parseFloat(amount) > budgetInfo.remaining && (
+                    <p className="text-danger fw-bold mb-0 mt-2">
+                      ⚠️ Esta compra excederá tu presupuesto por ₡{(parseFloat(amount) - budgetInfo.remaining).toLocaleString('es-CR', { minimumFractionDigits: 2 })}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="form-actions">

@@ -11,7 +11,8 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconReceipt,
-  IconCoin
+  IconCoin,
+  IconChartPie
 } from '@tabler/icons-react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -145,6 +146,14 @@ export default function Sidebar() {
         >
           <IconCoin size={24} />
           <span className="sidebar-link-text">Ingresos</span>
+        </Link>
+
+        <Link
+          href="/budgets"
+          className={`sidebar-link ${isActive('/budgets') ? 'active' : ''}`}
+        >
+          <IconChartPie size={24} />
+          <span className="sidebar-link-text">Presupuestos</span>
         </Link>
 
         <Link

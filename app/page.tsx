@@ -7,6 +7,7 @@ import IncomeExpenseCard from "./components/IncomeExpenseCard";
 import EmptyState from "./components/EmptyState";
 import Spinner from "./components/Spinner";
 import BalanceCard from "./components/BalanceCard";
+import BudgetAlertBanner from "./components/BudgetAlertBanner";
 import Link from "next/link";
 import { IconReceipt, IconCoin } from "@tabler/icons-react";
 
@@ -15,6 +16,7 @@ export default function Home() {
   const [expenses, setExpenses] = useState([])
   const [incomes, setIncomes] = useState([])
   const [balance, setBalance] = useState(0.0)
+  const [budgetAlerts, setBudgetAlerts] = useState({ overBudgetCount: 0, nearLimitCount: 0 })
   const router = useRouter()
 
   axios.defaults.withCredentials = true;
@@ -33,11 +35,16 @@ export default function Home() {
       Promise.all([
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/balance/${email}`),
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/lastFive/${email}`),
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/incomes/lastFive/${email}`)
-      ]).then(([balanceRes, expensesRes, incomesRes]) => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/incomes/lastFive/${email}`),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/budgets/${email}/alerts`)
+      ]).then(([balanceRes, expensesRes, incomesRes, budgetAlertsRes]) => {
         setBalance(parseFloat(balanceRes.data) || 0)
         setExpenses(expensesRes.data)
         setIncomes(incomesRes.data)
+        setBudgetAlerts({
+          overBudgetCount: budgetAlertsRes.data.overBudget?.length || 0,
+          nearLimitCount: budgetAlertsRes.data.nearLimit?.length || 0
+        })
       }).catch((err) => {
         console.log(err)
       }).finally(() => {
@@ -64,6 +71,10 @@ export default function Home() {
     <main className="container">
       <div className="mx-auto my-5">
         <BalanceCard balance={balance} />
+        <BudgetAlertBanner
+          overBudgetCount={budgetAlerts.overBudgetCount}
+          nearLimitCount={budgetAlerts.nearLimitCount}
+        />
         <div className="row">
           <div className="col-12 col-md-6">
             <h4 className="mt-5 mb-3">
