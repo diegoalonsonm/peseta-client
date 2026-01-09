@@ -3,9 +3,9 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Cash Controller",
-    "short_name": "CashCont",
-    "description": "Cash Controller PWA",
+    "name": "Peseta",
+    "short_name": "Peseta",
+    "description": "Peseta PWA",
     "icons": [
         {
             "src": "/icon-192x192.png",
