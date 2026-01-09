@@ -67,7 +67,7 @@ export const LineChart = ({ year }: LineChartProps) => {
         labels: {
           font: {
             size: 13,
-            weight: '500' as const
+            weight: 'normal' as const
           }
         }
       },

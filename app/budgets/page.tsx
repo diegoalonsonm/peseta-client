@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import BudgetCard from '../components/BudgetCard'
@@ -21,7 +21,7 @@ const BudgetsPage = () => {
 
   axios.defaults.withCredentials = true
 
-  const fetchBudgets = async () => {
+  const fetchBudgets = useCallback(async () => {
     const email = localStorage.getItem('email')
 
     if (!email) {
@@ -41,7 +41,7 @@ const BudgetsPage = () => {
         router.push('/login')
       }
     })
-  }
+  }, [router])
 
   const handleRefresh = async () => {
     await fetchBudgets()
@@ -93,7 +93,7 @@ const BudgetsPage = () => {
     fetchBudgets().finally(() => {
       setIsLoading(false)
     })
-  }, [])
+  }, [fetchBudgets])
 
   useEffect(() => {
     const handleScroll = () => {

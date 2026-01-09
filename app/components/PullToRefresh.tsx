@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, ReactNode } from 'react'
+import { useState, useEffect, useRef, useCallback, ReactNode } from 'react'
 import { IconRefresh } from '@tabler/icons-react'
 
 type PullToRefreshProps = {
@@ -15,15 +15,15 @@ export default function PullToRefresh({ onRefresh, children }: PullToRefreshProp
   const startY = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const handleTouchStart = (e: TouchEvent) => {
+  const handleTouchStart = useCallback((e: TouchEvent) => {
     // Only allow pull to refresh when scrolled to top
     if (window.scrollY === 0) {
       startY.current = e.touches[0].clientY
       setIsPulling(true)
     }
-  }
+  }, [])
 
-  const handleTouchMove = (e: TouchEvent) => {
+  const handleTouchMove = useCallback((e: TouchEvent) => {
     if (!isPulling || isRefreshing) return
 
     const currentY = e.touches[0].clientY
@@ -35,9 +35,9 @@ export default function PullToRefresh({ onRefresh, children }: PullToRefreshProp
       const resistedDistance = Math.min(distance * 0.5, 100)
       setPullDistance(resistedDistance)
     }
-  }
+  }, [isPulling, isRefreshing])
 
-  const handleTouchEnd = async () => {
+  const handleTouchEnd = useCallback(async () => {
     if (!isPulling || isRefreshing) return
 
     setIsPulling(false)
@@ -58,7 +58,7 @@ export default function PullToRefresh({ onRefresh, children }: PullToRefreshProp
     } else {
       setPullDistance(0)
     }
-  }
+  }, [isPulling, isRefreshing, pullDistance, onRefresh])
 
   useEffect(() => {
     const container = containerRef.current
@@ -73,7 +73,7 @@ export default function PullToRefresh({ onRefresh, children }: PullToRefreshProp
       container.removeEventListener('touchmove', handleTouchMove)
       container.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [isPulling, pullDistance, isRefreshing])
+  }, [handleTouchStart, handleTouchMove, handleTouchEnd])
 
   return (
     <div ref={containerRef} className="pull-to-refresh-container">
