@@ -54,19 +54,23 @@ const Profile = () => {
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Sesión cerrada exitosamente',
-          text: '¡Gracias por usar Peseta!'
-        })
+        // Remove email from localStorage first
         localStorage.removeItem('email')
-        setTimeout(() => {
-          axios.get('http://localhost:3930/logout').then((res) => {
+
+        // Call logout endpoint to clear cookie
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/logout`).then((res) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Sesión cerrada exitosamente',
+            text: '¡Gracias por usar Peseta!'
+          }).then(() => {
             router.push('/login')
-          }).catch((err) => {
-            console.log(err)
           })
-        }, 1000)
+        }).catch((err) => {
+          console.log(err)
+          // Even if logout fails, redirect to login
+          router.push('/login')
+        })
       }
     })
   }
